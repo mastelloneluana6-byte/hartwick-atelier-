@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HARTWICK ATELIER — Limited Edition Handwoven Collections</title>
+  <link rel="icon" type="image/x-icon" href="https://images.squarespace-cdn.com/content/v1/662ec4008fa24077e0d8b6b0/6ffb0411-49ee-406f-acdd-3051019e6411/favicon.ico?format=100w" />
+
+  <!-- Typography matching current Squarespace site: Spectral (Serif) & Montserrat (Clean Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Top Utility Bar: Phase 1 + Phase 2 Complete Status + Lot Status + Currency Switcher (§5.2 & §8.7) -->
+  <div class="announcement-bar">
+    <div class="announcement-bar__left" style="display:flex;align-items:center;gap:10px">
+      <button
+        id="phase-toggle-btn"
+        onclick="togglePhaseMode()"
+        style="background:#FAF8F4;border:1px solid #FAF8F4;color:#1A1A1A;padding:4px 10px;font-size:10px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;cursor:pointer;transition:all 0.25s ease"
+        title="Schakel tussen Volledige Fase 1 + Fase 2 weergave of alleen Fase 1"
+      >
+        ✦ Phase 1 + Phase 2 Complete (§1–§8.10 Active)
+      </button>
+      <button
+        id="badge-toggle-btn"
+        onclick="toggleBriefBadges()"
+        style="background:rgba(200,169,126,0.25);border:1px solid #C8A97E;color:#FAF8F4;padding:4px 10px;font-size:10px;letter-spacing:0.13em;text-transform:uppercase;cursor:pointer"
+        title="Toon of verberg de briefing-nummers op de pagina"
+      >
+        ✓ Brief Numbers: Visible
+      </button>
+    </div>
+    <div class="announcement-bar__center">
+      Lot 0325 (Pre Order) &nbsp;·&nbsp; Lot 0924 (Available in Small Quantities)
+    </div>
+    <div class="announcement-bar__utils">
+      <button onclick="openDispatchPopup()" style="background:none;border:none;color:inherit;font-size:10.5px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;text-decoration:underline">
+        [§6] The Dispatch
+      </button>
+      <select id="currency-select" class="currency-switcher" aria-label="Currency selector" onchange="changeCurrency(this.value)">
+        <option value="EUR" selected>EUR (€) [§5.2]</option>
+        <option value="GBP">GBP (£) [§5.2]</option>
+        <option value="USD">USD ($) [§8.7 P2]</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- SECTION 1 — SITE STRUCTURE & PRIMARY NAVIGATION (§1.1 – §1.4 + §8.9) -->
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <!-- Primary Navigation -->
+      <nav class="primary-nav" id="primary-nav" aria-label="Primary Navigation"></nav>
+
+      <!-- Center Logo (Blends seamlessly into warm off-white header via mix-blend-mode: multiply) -->
+      <div class="site-logo" onclick="navigateTo('home')">
+        <img
+          src="https://images.squarespace-cdn.com/content/v1/662ec4008fa24077e0d8b6b0/51cadf96-6a2f-43ca-b9ca-cba258d217ce/BRANDNAME_CROP.png?format=1500w"
+          alt="HARTWICK ATELIER"
+        />
+      </div>
+
+      <!-- Right Actions -->
+      <div class="header-actions" id="header-actions"></div>
+    </div>
+  </header>
+
+  <!-- INTERACTIVE CLIENT BRIEF CHECKLIST NAVIGATOR (Click any number from the brief to inspect) -->
+  <div class="brief-navigator" id="brief-navigator">
+    <div class="brief-navigator__inner">
+      <span style="font-weight:600;color:#C8A97E;text-transform:uppercase;letter-spacing:0.15em">
+        Client Brief Index (Click to Inspect):
+      </span>
+      <div class="brief-navigator__pills">
+        <button class="brief-nav-pill" onclick="jumpToBriefSection('home', 'sec-1-nav')">§1 Navigation</button>
+        <button class="brief-nav-pill" onclick="jumpToBriefSection('home', 'sec-2-1-hero')">§2.1 Hero</button>
+        <button class="brief-nav-pill" onclick="jumpToBriefSection('home', 'sec-2-2-statement')">§2.2 Statement</button>
+        <button class="brief-nav-pill" onclick="jumpToBriefSection('home', 'sec-2-3-pillars')">§2.3 4 Pillars</button>
+        <button class="brief-nav-pill" onclick="jumpToBriefSection('home', 'sec-2-4-feel')">§2.4 The Feel</button>
+        <button class="brief-nav-pill" onclick="jumpToBriefSection('home', 'sec-2-5-lots')">§2.5 Lot Status</button>
+        <button class="brief-nav-pill" onclick="jumpToBriefSection('home', 'sec-2-6-craft')">§2.6 Craft Detail</button>
+        <button class="brief-nav-pill" onclick="jumpToBriefSection('home', 'sec-2-7-founder')">§2.7 Founder Quote</button>
+        <button class="brief-nav-pill" onclick="jumpToBriefSection('home', 'sec-2-8-insta')">§2.8 Instagram</button>
+        <button class="brief-nav-pill" onclick="jumpToBriefSection('home', 'sec-2-9-dispatch')">§2.9 Newsletter</button>
+        <button class="brief-nav-pill" onclick="jumpToBriefSection('home', 'sec-2-10-footer')">§2.10 Footer</button>
+        <button class="brief-nav-pill" onclick="navigateTo('collection', 'all-apparel')">§3 Catalog (#1–#66)</button>
+        <button class="brief-nav-pill" onclick="navigateTo('pdp', 'palma-skirt-indigo-khadi')">§4.1–4.10 Product Page</button>
+        <button class="brief-nav-pill" onclick="openCartWithDemoItem()">§5 Checkout &amp; Shipping</button>
+        <button class="brief-nav-pill" onclick="openDispatchPopup()">§6 Klaviyo Popup</button>
+        <button class="brief-nav-pill" onclick="navigateTo('pdp', 'palma-skirt-indigo-khadi')">§7 Wear It With</button>
+        <button class="brief-nav-pill brief-nav-pill--p2" onclick="jumpToBriefSection('home', 'sec-8-phase2')">§8.1–8.10 Phase 2 (All 10 Items)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DYNAMIC MAIN CONTENT -->
+  <main id="app-main"></main>
+
+  <!-- SECTION 2.10 — FOOTER (Logo melts seamlessly into warm background) -->
+  <footer class="site-footer" id="sec-2-10-footer">
+    <div class="brief-section-banner" style="padding-top:24px;margin-bottom:0">
+      <span class="brief-tag">Brief §2.10 — Footer (Logo, Contact, About, The Masters, Returns Policy, Size Guide, Instagram, Newsletter + Phase 2 Links)</span>
+    </div>
+    <div class="site-footer__inner">
+      <div class="footer-brand">
+        <div class="footer-brand__logo-wrap">
+          <img
+            class="footer-brand__crest"
+            src="https://images.squarespace-cdn.com/content/v1/662ec4008fa24077e0d8b6b0/a207312b-4862-493d-81d6-ac230189984a/Hartwick_logo_PlainFrame_Square_SansAtelier+Black+.png"
+            alt="Hartwick Crest"
+          />
+          <img
+            class="footer-brand__logo"
+            src="https://images.squarespace-cdn.com/content/v1/662ec4008fa24077e0d8b6b0/51cadf96-6a2f-43ca-b9ca-cba258d217ce/BRANDNAME_CROP.png?format=1500w"
+            alt="HARTWICK ATELIER"
+          />
+        </div>
+        <p class="footer-brand__contact">
+          Contact: <a href="mailto:contact@HARTWICKATELIER.com" style="text-decoration:underline">contact@HARTWICKATELIER.com</a>
+        </p>
+        <p class="footer-brand__contact" style="color:var(--text-muted);font-size:12.5px;margin-top:10px;max-width:340px">
+          Handspun and handwoven fabrics, natural and ayurvedic dyes, and exquisite heritage handwork.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="footer-links-title">Atelier <span class="brief-tag" style="margin-left:6px">§2.10 &amp; §5.4</span></h4>
+        <ul class="footer-links-list" id="footer-links-list"></ul>
+      </div>
+
+      <div>
+        <h4 class="footer-links-title">The Dispatch <span class="brief-tag" style="margin-left:6px">§6.1</span></h4>
+        <p class="footer-newsletter__text">
+          Join our mailing list for new lot releases and stories from the loom.
+        </p>
+        <form class="dispatch-form" onsubmit="handleNewsletterSubmit(event, 'footer-dispatch-msg')">
+          <input
+            type="email"
+            class="dispatch-form__input"
+            placeholder="Email address"
+            required
+            aria-label="Footer email address"
+          />
+          <button type="submit" class="dispatch-form__btn" style="padding:14px 22px">Join</button>
+        </form>
+        <div id="footer-dispatch-msg" class="dispatch-feedback"></div>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <span>&copy; 2026 HARTWICK ATELIER. All Rights Reserved.</span>
+      <span id="footer-currency-note">EUR (€) / GBP (£) / USD ($) · EU, UK &amp; US Fulfilment · Atelier Circle Loyalty Active [§5 &amp; §8]</span>
+    </div>
+  </footer>
+
+  <!-- SECTION 6 — KLAVIYO POPUP ("THE DISPATCH" — 10-SECOND DELAY ON FIRST VISIT) -->
+  <div class="modal-backdrop" id="dispatch-popup-backdrop">
+    <div class="dispatch-popup" role="dialog" aria-labelledby="popup-title">
+      <button class="popup-close-btn" onclick="closeDispatchPopup()" aria-label="Close popup">×</button>
+      <div class="dispatch-popup__img">
+        <img
+          src="https://images.squarespace-cdn.com/content/v1/662ec4008fa24077e0d8b6b0/647043be-fcc2-4ccd-a1ed-902e681194c4/156_HARTWICK_EDITORIAL_PARIS.jpg"
+          alt="The Dispatch Hartwick Atelier"
+        />
+      </div>
+      <div class="dispatch-popup__content">
+        <div style="margin-bottom:10px;display:flex;gap:6px;flex-wrap:wrap">
+          <span class="brief-tag">Brief §6.1 — Klaviyo "The Dispatch"</span>
+          <span class="brief-tag">§6.2 — 10s Delay &amp; 30-Day Cookie</span>
+          <span class="brief-tag">§6.3 — GDPR Double Opt-In</span>
+        </div>
+        <span class="section-eyebrow">Klaviyo · Double Opt-In</span>
+        <h3 id="popup-title" style="font-family:var(--font-serif);font-size:26px;font-weight:400;margin-bottom:14px">
+          The Dispatch
+        </h3>
+        <p style="font-size:15px;color:var(--text-secondary);line-height:1.75;margin-bottom:26px">
+          “The Dispatch — News, new collections, and the stories behind them. Join the list.”
+        </p>
+        <form class="dispatch-form" onsubmit="handleNewsletterSubmit(event, 'popup-dispatch-msg')" style="margin-bottom:12px">
+          <input
+            type="email"
+            class="dispatch-form__input"
+            placeholder="Your email address"
+            required
+          />
+          <button type="submit" class="dispatch-form__btn" style="padding:14px 22px">Subscribe</button>
+        </form>
+        <div id="popup-dispatch-msg" class="dispatch-feedback"></div>
+        <button
+          onclick="closeDispatchPopup()"
+          style="background:none;border:none;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);margin-top:16px;cursor:pointer;text-align:left"
+        >
+          No thank you — dismiss for 30 days [§6.2]
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 INTERACTIVE MODAL (Craft Glossary Annotation §8.1 / Size Recommendation Tool §8.6) -->
+  <div class="modal-backdrop" id="phase2-modal-backdrop" onclick="closePhase2Modal()">
+    <div
+      class="contact-box"
+      style="max-width:600px;width:100%;background:var(--bg-primary);position:relative;border:1px solid var(--text-primary)"
+      onclick="event.stopPropagation()"
+    >
+      <button class="popup-close-btn" onclick="closePhase2Modal()">×</button>
+      <div id="phase2-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- SHOPPING BAG DRAWER (SECTION 5 — CHECKOUT, PAYMENTS & SHIPPING + PHASE 2 §8.3 & §8.7) -->
+  <div class="modal-backdrop" id="cart-backdrop" onclick="closeCartDrawer()"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping Bag">
+    <div class="cart-drawer__header">
+      <div>
+        <span class="brief-tag" style="margin-bottom:4px">Brief §5.1–§5.5 &amp; §8.7</span>
+        <h3 class="cart-drawer__title">Shopping Bag</h3>
+      </div>
+      <button onclick="closeCartDrawer()" style="background:none;border:none;font-size:24px;cursor:pointer;line-height:1">×</button>
+    </div>
+    <div class="cart-drawer__items" id="cart-drawer-body"></div>
+    <div class="cart-drawer__footer" id="cart-drawer-footer"></div>
+  </aside>
+
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
